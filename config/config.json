@@ -1,0 +1,8 @@
+{
+	"cmd": "!",
+	"adminIDs": ["Put", "admin's", "IDs", "here"],
+	"opIDs": ["Put", "operator's", "IDs", "here"],
+	
+	"killMsg": "Crois-moi, je ne suis pas méchant... J'ai juste un côté obscur un peu prononcé.",
+	"cmdNotAllowed": "Hey , tu m'as pris pour un jambon ?! T'as pas le droit de me forcer à faire ça !"
+}
