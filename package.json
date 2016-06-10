@@ -1,7 +1,7 @@
 {
 	"name": "sfbot",
 	"version": "0.1.0",
-	"depencies": {
+	"dependencies": {
 		"discord": "~7.0.1",
 		"mysql": "~2.11.1",
 		"node-mysql": "~0.4.2",
