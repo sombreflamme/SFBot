@@ -1,3 +1,4 @@
 # Exclure le répertoire de plugins node
 /node_modules/
+/logs/
 
