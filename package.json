@@ -6,7 +6,6 @@
 		"mysql": "~2.11.1",
 		"node-mysql": "~0.4.2",
 		"winston": "~2.2.0",
-		"winston-daily-rotate-file": "~1.1.2",
 		"cleverbot-node": "~0.2.2"
 	},
 	"author": "Sion Meowri <si0n@outlook.com>",

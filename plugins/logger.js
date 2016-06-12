@@ -1,66 +1,45 @@
-var Winston = require('winston');
-Winston.transports.DailyRotateFile = require("winston-daily-rotate-file");
-
-// Chat Logger
-
-Winston.emitErrs = true;
-
-exports.ChatLog = new Winston.Logger({
-  transports: [
-    new Winston.transports.DailyRotateFile({
-      handleExceptions: false,
-      name: 'file:chat',
-      filename: __dirname + '/../logs/chat',
-      datePattern: '-dd-MM-yyyy.log',
-      formatter: function(args) { return args.message; },
-      level: 'info',
-      json: false
-    })
-  ]
-});
-
-// Command Error Logger
+var Winston = require("winston");
+var path = require("path");
+var Config = require("../config/config.json");
+var logFile = Config.logFile;
+var loggerLvl = Config.loggerLvl;
+var chatLogFile = Config.chatLogFile;
 
 exports.Logger = new Winston.Logger({
-  colors: {
-    verbose: 'orange',
-    debug: 'blue',
-    info: 'green',
-    warn: 'yellow',
-    error: 'red'
-  },
-  transports: [
-    new Winston.transports.DailyRotateFile({
-      humanReadableUnhandledException: true,
-      handleExceptions: true,
-      name: 'file:exceptions',
-      filename: __dirname + '/../logs/exceptions',
-      datePattern: '-dd-MM-yyyy.log',
-      level: 'exception',
-      json: false
-    }),
-    new Winston.transports.DailyRotateFile({
-      handleExceptions: false,
-      name: 'file:error',
-      filename: __dirname + '/../logs/errors',
-      datePattern: '-dd-MM-yyyy.log',
-      level: 'error',
-      json: false
-    }),
-    new Winston.transports.DailyRotateFile({
-    	handleExceptions: false,
-    	name: 'file:console',
-    	filename: __dirname + '/../logs/console',
-    	datePattern: '-dd-MM-yyyy.log',
-    	level: 'debug',
-    	json: false
-    }),
-    new Winston.transports.Console({
-    	handleExceptions: true,
-    	level: 'verbose',
-    	colorize: true,
-    	json: false
-    })
-  ],
-  exitOnError: true
+	colors: {
+		error: "red",
+		warn: "yellow",
+		info: "green",
+		verbose: "cyan",
+		debug: "blue"
+	},
+	transports: [
+		new Winston.transports.Console({
+			handleExceptions: true,
+			humanReadableUnhandledException: true,
+			level: loggerLvl,
+			colorize: true,
+			json: false
+		}),
+		new Winston.transports.File({
+			filename: __dirname + "/../" + logFile,
+			handleExceptions: true,
+			humanReadableUnhandledException: true,
+			level: "debug",
+			colorize: true,
+			json: false
+		})
+	]
+});
+
+exports.ChatLog = new Winston.Logger({
+	transports: [
+		new Winston.transports.File({
+			handleExceptions: false,
+			filename: __dirname + "/../" + chatLogFile,
+			formatter: function(args) { return args.message; },
+			level: "info",
+			json: false
+		})
+	]
 });

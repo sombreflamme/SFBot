@@ -1,0 +1,24 @@
+{
+	"bootConfigMsg": "Chargement de la configuration terminée.",
+	"bootCmdMsg": "Chargement des commandes terminées.",
+	"loadBotMsg": "Préparation de l'instance Client Discord terminée. Connexion en cours ...",
+
+	"readyMsg1": "Connexion réussie.",
+	"readyMsg2": "Présent sur et dans chans.",
+	"readyMsg3": "Prêt à sévir !",
+
+	"disconnectedMsg": "J'ai été déconnecté de façon inattendue !",
+
+	"cmdNotAllowed": "Hey , tu m'as pris pour un jambon ?! T'as pas le droit de me forcer à faire ça !",
+	"cmdExecBy": " a exécuté la commande suivante : ",
+	"cmdExecResult1": "Commande exécutée par ",
+	"cmdExecResult2": ": Acceptée: Refusée",
+
+	"killDesc": "Tue le petit robot en lui demandant de se suicider proprement.",
+	"killExtHelp": "Le robot se déconnectera et le processus s'arrêtera.",
+	"killMsg": "Crois-moi, je ne suis pas méchant. J'ai juste un côté obscur un peu prononcé.",
+	"killBy": "J'ai été tué par ",
+	
+	"pingDesc": "On joue au Ping-Pong ? :heart_eyes:",
+	"pingExtHelp": "Le robot répond à votre demande de ping, ce qui permet de savoir s'il est toujours présent et apte à répondre aux commandes."
+}
