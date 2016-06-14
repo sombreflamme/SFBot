@@ -16,9 +16,24 @@
 
 	"killDesc": "Tue le petit robot en lui demandant de se suicider proprement.",
 	"killExtHelp": "Le robot se déconnectera et le processus s'arrêtera.",
-	"killMsg": "Crois-moi, je ne suis pas méchant. J'ai juste un côté obscur un peu prononcé.",
+	"killMsg": "Ça y est… je vois trouble. C’est le manque de gras, je me dessèche.",
 	"killBy": "J'ai été tué par ",
-	
+
+	"maintenanceDesc": "Tu as bien raison, j'en ai marre d'obéir à toutes vos demandes.",
+	"maintenanceExtHelp": "Mets le bot en mode Maintenance. Il ne répondra plus à aucune commande.",
+	"maintenanceLogOn": " m'a mis en mode Maintenance !",
+	"maintenanceLogOff": " m'a sorti du mode Maintenance !",
+	"maintenanceMsgOn": " m'a mis en mode Maintenance ! Je ne répondrai plus à vos demandes et je vais pouvoir me reposer ! :stuck_out_tongue_closed_eyes:",
+	"maintenanceMsgOff": " m'a sorti du mode Maintenance ! Je répondrai de nouveau à vos demandes, à mon grand désarroi... :slight_frown:",
+	"maintenanceMsgOnErr": ", je suis déjà en mode Maintenance ! :no_mouth:",
+	"maintenanceMsgOffErr": ", je ne suis pas encore en mode Maintenance ! :stuck_out_tongue:",
+	"maintenanceErr": ", je ne réponds à cette demande qu'avec <on> ou <off> :open_mouth:",
+	"maintenanceMsg": "Je suis en maintenance, j'ai donc pleinement le droit de ne pas vous répondre ! :sunglasses:",
+
 	"pingDesc": "On joue au Ping-Pong ? :heart_eyes:",
-	"pingExtHelp": "Le robot répond à votre demande de ping, ce qui permet de savoir s'il est toujours présent et apte à répondre aux commandes."
+	"pingExtHelp": "Le robot répond à votre demande de ping, ce qui permet de savoir s'il est toujours présent et apte à répondre aux commandes.",
+
+	"diceDesc": "Let's roll the dice !",
+	"diceExtHel": "Lancez un dé, je vous donne le résultat !",
+	"diceMsg": ", ton lancé de dé à faces a donné **** !"
 }

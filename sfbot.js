@@ -20,6 +20,8 @@ var ChatLog = require("./plugins/logger.js").ChatLog;
 
 Logger.info(sfbotMsg.bootConfigMsg);
 
+var maintenance = false;
+
 /********************************
           Commandes
 ********************************/
@@ -29,7 +31,7 @@ var commands = {
 		description: sfbotMsg.killDesc,
 		extendHelp: sfbotMsg.killExtHelp,
 		adminOnly: true,
-		process : function(sfbot, msg) {
+		process: function(sfbot, msg) {
 			var killMsg = sfbotMsg.killMsg;
 			var killBy = sfbotMsg.killBy;
 			sfbot.sendMessage(msg.channel, killMsg, function() {
@@ -39,12 +41,58 @@ var commands = {
 			});
 		}
 	},
+	"maintenance": {
+		name: "maintenance",
+		description: sfbotMsg.maintenanceDesc,
+		extendHelp: sfbotMsg.maintenanceExtHelp,
+		usage: "<on|off>",
+		opOnly: true,
+		process: function(sfbot, msg, suffix) {
+			if (suffix && suffix === "on") {
+				if (!maintenance) {
+					sfbot.sendMessage(msg.channel, msg.sender + sfbotMsg.maintenanceMsgOn);
+					maintenance = true;
+					Logger.info(msg.author.username + sfbotMsg.maintenanceLogOn);
+				}
+				else {
+					sfbot.sendMessage(msg.channel, msg.sender + sfbotMsg.maintenanceMsgOnErr);
+				}
+			}
+			else if (suffix && suffix === "off") {
+				if (maintenance) {
+					Logger.info(msg.author.username + sfbotMsg.maintenanceLogOff);
+                                        sfbot.sendMessage(msg.channel, msg.sender + sfbotMsg.maintenanceMsgOff);
+                                        maintenance = false;
+				}
+				else {
+					sfbot.sendMessage(msg.channel, msg.sender + sfbotMsg.maintenanceMsgOffErr);
+				}
+			}
+			else {
+				sfbot.sendMessage(msg.channel, msg.sender + sfbotMsg.maintenanceErr);
+			}
+		}
+	},
 	"ping": {
 		name: "ping",
 		description: sfbotMsg.pingDesc,
 		extendHelp: sfbotMsg.pingExtHelp,
-		process : function(sfbot, msg) {
+		process: function(sfbot, msg) {
 			sfbot.sendMessage(msg.channel, msg.sender + ", Pong !");
+		}
+	},
+	"dice": {
+		name: "dice",
+		description: sfbotMsg.diceDesc,
+		extendHelp: sfbotMsg.diceExtHelp,
+		usage: "<faces>",
+		process: function(sfbot, msg, suffix) {
+			var diceMsg = sfbotMsg.diceMsg;
+			var dice;
+			if (suffix && (parseFloat(suffix) == parseInt(suffix) && !isNaN(suffix))) dice = suffix;
+			else dice = 6;
+			var roll = Math.floor((Math.random() * dice) + 0);
+			sfbot.sendMessage(msg.channel, msg.sender + diceMsg.substring(0, 20) + dice + diceMsg.substring(19, 36) + roll + diceMsg.substring(36, 40));
 		}
 	}
 };
@@ -87,13 +135,17 @@ sfbot.on("message", function(msg) {
 	}
 	// Vérification si c'est une commande
 	if (msg.author.id != sfbot.user.id && (msg.content[0] === cmdPrefix)) {
-		// Si le bot est en maintenance
-		
 		// Logger la commande et le lanceur
 		Logger.info(msg.author.username + sfbotMsg.cmdExecBy + "<" + msg.content + ">");
 
 		var cmdTxt = msg.content.split(" ")[0].substring(1).toLowerCase();
 		var suffix = msg.content.substring(cmdTxt.length + 2);
+
+		// Si en mode maintenance
+		if (maintenance && cmdTxt != "maintenance") {
+			sfbot.sendMessage(msg.channel, sfbotMsg.maintenanceMsg);
+			return;
+		}
 
 		var command = commands[cmdTxt];
 		if (command) {
