@@ -17,6 +17,8 @@
 	"helpMsg1": "Voici les différentes commandes auxquelles je peux répondre. Utilisez `help <commande>` pour en savoir plus sur une commande spécifique.",
 	"helpMsg2": "Si vous avez la moindre question, ou que vous ne comprenez pas une information, vous pouvez contacter mon créateur : <@>",
 	"helpLog": " a demandé de l'aide.",
+	"helpAdminOnly": "Seul mon administrateur peut exécuter cette commande.",
+	"helpOpOnly": "Seuls les officiers peuvent exécuter cette commande.",
 	"helpCmdErr": "Je ne connais pas cette commande, vous avez dû vous tromper. :thinking:",
 
 	"killDesc": "Vous oseriez tuer un gentil petit robot ? :disappointed_relieved:",
@@ -40,5 +42,23 @@
 
 	"diceDesc": "Let's roll the dice !",
 	"diceExtHelp": "Lancez un dé, je vous donne le résultat ! Si vous ne précisez pas le nombre de faces du dé, ce sera un dé 100. :grinning:",
-	"diceMsg": ", ton lancé de dé à faces a donné **** !"
+	"diceMsg": ", ton lancé de dé à faces a donné **** !",
+
+	"sayDesc": "Faites de moi votre marionnette !",
+	"sayExtHelp": "Fais parler le bot dans le channel indiqué (ID nécessaire), avec la phrase donnée.",
+
+	"infoDesc": "Tu veux en savoir plus sur moi ? La curiosité est un vilain défaut tu sais ? :relaxed:",
+	"infoExtHelp": "Envoie en message privé les informations de base du bot.",
+	"infoMsg1": "Salut ! Je suis ****, un bot Discord.",
+	"infoMsg2": "Je suis actuellement dans ma version **.",
+	"infoMsg3": "Je suis ici pour apporter quelques fonctionnalités en plus de celle proposée par Discord, ainsi que pour apporter un peu de joie et de gaieté. :grinning:",
+	"infoMsg4": "Pour voir ce dont je suis capable, vous pouvez utiliser la commande suivante : `help`",
+	"infoMsg5": "Si vous avez des questions ou des idées pour m'améliorer, n'hésitez pas à contacter mon créateur: <@>",
+
+	"avatarDesc": "Ah un petit lifting, c'est une bonne idée ça !",
+	"avatarExtHelp": "Change l'avatar du robot.",
+	"avatarMsgImg": "Il me faut une image pour que je puisse changer mon avatar... :wink:",
+	"avatarMsgOK": "Et voilà, une toute nouvelle tête ! :blush:",
+	"avatarMsgLog": "Avatar du bot modifié par ",
+	"avatarMsgErr": "Il y a eu une erreur dans la récupération de l'image :("
 }

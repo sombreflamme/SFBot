@@ -12,7 +12,7 @@ var Auth = require("./config/auth.json"); // Token d'identification
 
 // Chargement des plugins
 var Discord = require("discord.js");
-var Mysql = require("node-mysql");
+var request = require("request").defaults({ encoding: null });
 
 // Chargement des loggers
 var Logger = require("./plugins/logger.js").Logger;
@@ -89,10 +89,70 @@ var commands = {
 		process: function(sfbot, msg, suffix) {
 			var diceMsg = sfbotMsg.diceMsg;
 			var dice;
-			if (suffix && (parseFloat(suffix) == parseInt(suffix) && !isNaN(suffix))) dice = suffix;
+			if (suffix && (parseFloat(suffix) == parseInt(suffix) && !isNaN(suffix)) &&suffix >= 3 && suffix <= 10000) dice = suffix;
 			else dice = 100;
-			var roll = Math.floor((Math.random() * dice) + 0);
+			var roll = Math.floor((Math.random() * dice) + 1);
 			sfbot.sendMessage(msg.channel, msg.author + diceMsg.substring(0, 20) + dice + diceMsg.substring(19, 36) + roll + diceMsg.substring(36, 40));
+		}
+	},
+	"say": {
+		name: "say",
+		description: sfbotMsg.sayDesc,
+		extendHelp: sfbotMsg.sayExtHelp,
+		usage: "<channelID> <phrase>",
+		adminOnly: true,
+		process: function(sfbot, msg, suffix) {
+			var chanID = suffix.split(" ")[0];
+			var message = suffix.substring(19);
+			if (!msg.channel.server) {
+				sfbot.sendMessage(chanID, message);
+			} 
+		}
+	},
+	"info": {
+		name: "info",
+		description: sfbotMsg.infoDesc,
+		extendHelp: sfbotMsg.infoExtHelp,
+		process: function(sfbot, msg) {
+			var msgArray = [];
+			msgArray.push(sfbotMsg.infoMsg1.substring(0, 18) + sfbot.user.username + sfbotMsg.infoMsg1.substring(18));
+			msgArray.push(sfbotMsg.infoMsg2.substring(0, 38) + version + sfbotMsg.infoMsg2.substring(38));
+			msgArray.push(sfbotMsg.infoMsg3);
+			msgArray.push(sfbotMsg.infoMsg4.substring(0, 80) + cmdPrefix + sfbotMsg.infoMsg4.substring(80));
+			msgArray.push(sfbotMsg.infoMsg5.substring(0, 100) + adminIDs[0] + sfbotMsg.infoMsg5.substring(100));
+			sfbot.sendMessage(msg.author, msgArray);
+		}
+	},
+	"avatar": {
+		name: "avatar",
+		description: sfbotMsg.avatarDesc,
+		extendHelp: sfbotMsg.avatarExtHelp,
+		usage: "<Direct URL of avatar>",
+		adminOnly: true,
+		process: function(sfbot, msg, suffix) {
+			if (!suffix) {
+				sfbot.sendMessage(msg.channel, sfbotMsg.avatarMsgImg);
+			}
+			else {
+				request.get(suffix, function(error, response, body) {
+					if (!error && response.statusCode == 200) {
+						var url = suffix.split(".");
+						var ext = url[url.length-1];
+						var avatar = "data:image/" + ext + ";base64," + new Buffer(body).toString("base64");
+						sfbot.setAvatar(avatar, function(error) {
+							if (error) Logger.debug(error);
+							else {
+								sfbot.sendMessage(msg.channel, sfbotMsg.avatarMsgOK);
+								Logger.info(sfbotMsg.avatarMsgLog + msg.author);
+							}
+						});
+					}
+					else {
+						sfbot.sendMessage(msg.channel, sfbotMsg.avatarMsgErr);
+						Logger.debug(error);
+					}
+				});
+			}
 		}
 	}
 };
@@ -135,9 +195,7 @@ sfbot.on("message", function(msg) {
 	}
 	// Vérification si c'est une commande
 	if (msg.author.id != sfbot.user.id && (msg.content[0] === cmdPrefix)) {
-		// Logger la commande et le lanceur
-		Logger.info(msg.author.username + sfbotMsg.cmdExecBy + "<" + msg.content + ">");
-
+		
 		var cmdTxt = msg.content.split(" ")[0].substring(1).toLowerCase();
 		var suffix = msg.content.substring(cmdTxt.length + 2);
 
@@ -153,7 +211,12 @@ sfbot.on("message", function(msg) {
 			if (!suffix) {
 				var commandsNames = [];
 				for (index in commands) {
-					commandsNames.push("`" + commands[index].name + "`");
+					if ((commands[index].adminOnly && isAdmin(msg.author.id)) || (commands[index].opOnly && isOp(msg.author.id)) ) {
+						commandsNames.push("`" + commands[index].name + "`");
+					}
+					if (!commands[index].hasOwnProperty("adminOnly") && !commands[index].hasOwnProperty("opOnly")) {
+						commandsNames.push("`" + commands[index].name + "`");
+					}
 				}
 				msgArray.push(sfbotMsg.helpMsg1.substring(0, 71) + cmdPrefix + sfbotMsg.helpMsg1.substring(71, 140));
 				msgArray.push("");
@@ -173,10 +236,10 @@ sfbot.on("message", function(msg) {
 					msgArray.push("**Description** : " + command.description);
 					msgArray.push(command.extendHelp);
 					if (command.hasOwnProperty("adminOnly")) {
-						msgArray.push("**Restriction** : Seul mon administrateur peut exécuter cette commande.");
+						msgArray.push("**Restriction** : " + sfbotMsg.helpAdminOnly);
 					}
 					if (command.hasOwnProperty("opOnly")) {
-						msgArray.push("**Restriction** : Seuls les officiers peuvent exécuter cette commande.");
+						msgArray.push("**Restriction** : " + sfbotMsg.helpOpOnly);
 					}
 					sfbot.sendMessage(msg.author, msgArray);
 				}
@@ -188,6 +251,8 @@ sfbot.on("message", function(msg) {
 
 		var command = commands[cmdTxt];
 		if (command) {
+			// Logger la commande et le lanceur
+			Logger.info(msg.author.username + sfbotMsg.cmdExecBy + "<" + msg.content + ">");
 			var cmdCheckSpec = canProcessCmd(command, cmdTxt, msg.author.id, msg);
 			if (cmdCheckSpec.isAllow) {
 				command.process(sfbot, msg, suffix);
