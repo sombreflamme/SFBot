@@ -154,6 +154,43 @@ var commands = {
 				});
 			}
 		}
+	},
+	"chooseme": {
+		name: "chooseme",
+		description: sfbotMsg.choosemeDesc,
+		extendHelp: sfbotMsg.choosemeExtHelp,
+		usage: "",
+		process: (sfbot, msg, suffix) => {
+			// On crée la liste des gens enregistrés pour le tirage si besoin
+			// puis on ajoute l'auteur de la commande.
+			if (!this.chooseList) 
+				this.chooseList = new Set();
+			this.chooseList.add(msg.author);
+
+			// On crée la commande !choose si besoin.
+			if (!commands.choose)
+	// L'indentation est différente par choix, pour aligner avec les commandes
+	// déclarées de façon statique.
+	commands.choose = {
+		name: "chooseme",
+		description: sfbotMsg.chooseDesc,
+		extendHelp: sfbotMsg.chooseExtHelp,
+		usage: "",
+		process: (sfbot, msg, suffix) => {
+			// On choisit une personne au hasard dans la liste.
+			var chooseList = Array.from(this.chooseList);
+			var chosenOne  = chooseList[Math.floor(Math.random() * chooseList.length)];
+
+			// On affiche le message.
+			sfbot.sendMessage(msg.channel, sfbotMsg.chosenOne + chosenOne);
+
+			// On détruit la liste et la commande choose pour repartir sur un tirage vierge.
+			delete this.chooseList;
+			delete commands.choose;
+		}
+
+	}
+		}
 	}
 };
 
