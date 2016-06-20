@@ -60,5 +60,10 @@
 	"avatarMsgImg": "Il me faut une image pour que je puisse changer mon avatar... :wink:",
 	"avatarMsgOK": "Et voilà, une toute nouvelle tête ! :blush:",
 	"avatarMsgLog": "Avatar du bot modifié par ",
-	"avatarMsgErr": "Il y a eu une erreur dans la récupération de l'image :("
+	"avatarMsgErr": "Il y a eu une erreur dans la récupération de l'image :(",
+	"choosemeDesc" : "S'enregistrer pour le tirage au sort.",
+	"choosemeExtHelp" : "Permet de s'enregistrer pour être tiré au sort avec la commande !choose",
+	"chooseDesc" : "Les jeux sont faits, rien ne va plus !",
+	"chooseExtHelp" : "Tirage au sort des gens enregistrés avec !chooseme",
+	"chosenOne" : "Et l'heureux tiré au sort est ..."
 }
