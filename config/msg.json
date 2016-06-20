@@ -41,8 +41,9 @@
 	"pingExtHelp": "Le robot répond à votre demande de ping, ce qui permet de savoir s'il est toujours présent et apte à répondre aux commandes.",
 
 	"diceDesc": "Let's roll the dice !",
-	"diceExtHelp": "Lancez un dé, je vous donne le résultat ! Si vous ne précisez pas le nombre de faces du dé, ce sera un dé 100. :grinning:",
-	"diceMsg": ", ton lancé de dé à faces a donné **** !",
+	"diceExtHelp": "Indiquez le nombre de dés que vous voulez lancer, le nombre de faces de chaque dé, et je lancerai le tout pour vous ! Si vous ne précisez pas le nombre de dés ou de faces du dé, ce sera un dé 100. :grinning:",
+	"diceMsg": ", ton lancé de a donné **** !",
+	"diceErr": "Il semble qu'il y ait eu une erreur, mais dans le doute disons que vous avez fait le score maximum. :wink:",
 
 	"sayDesc": "Faites de moi votre marionnette !",
 	"sayExtHelp": "Fais parler le bot dans le channel indiqué (ID nécessaire), avec la phrase donnée.",
@@ -60,5 +61,14 @@
 	"avatarMsgImg": "Il me faut une image pour que je puisse changer mon avatar... :wink:",
 	"avatarMsgOK": "Et voilà, une toute nouvelle tête ! :blush:",
 	"avatarMsgLog": "Avatar du bot modifié par ",
-	"avatarMsgErr": "Il y a eu une erreur dans la récupération de l'image :("
+	"avatarMsgErr": "Il y a eu une erreur dans la récupération de l'image :(",
+
+	"choosemeDesc": "Ne soyez pas timide, participez au tirage au sort voyons !",
+	"choosemeExtHelp": "Permet de s'enregistrer pour être tiré au sort avec la commande `choose`.",
+	"choosemeMsg": ", tu as bien été ajouté à la liste pour le tirage au sort !",
+	"choosemeLog": " a bien été ajouté à la liste pour le tirage au sort.",
+	"chooseDesc": "Les jeux sont faits, rien ne va plus !",
+	"chooseExtHelp": "Tirage au sort des gens enregistrés avec `chooseme`.",
+	"chooseErr": "Il n'y a pas assez de personnes enregistrées pour pouvoir choisir.",
+	"chosenOne": "Et l'heureux tiré au sort est... "
 }
