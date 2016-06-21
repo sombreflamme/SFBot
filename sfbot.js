@@ -22,6 +22,7 @@ Logger.info(sfbotMsg.bootConfigMsg);
 
 var maintenance = false;
 var chooseList = [];
+var play = false;
 
 /********************************
           Commandes
@@ -202,10 +203,15 @@ var commands = {
 		description: sfbotMsg.choosemeDesc,
 		extendHelp: sfbotMsg.choosemeExtHelp,
 		process: function (sfbot, msg) {
-			// Ajoute l'auteur du message dans la liste et envoie une confirmation.
-			chooseList.push(msg.author);
-			sfbot.sendMessage(msg.channel, msg.author +  sfbotMsg.choosemeMsg);
-			Logger.info(msg.author.username + sfbotMsg.choosemeLog);
+			// Ajoute l'auteur du message dans la liste et envoie une confirmation s'il n'y est pas déjà.
+			if (chooseList.indexOf(msg.author) == -1) {
+				chooseList.push(msg.author);
+				sfbot.sendMessage(msg.channel, msg.author +  sfbotMsg.choosemeMsg);
+				Logger.info(msg.author.username + sfbotMsg.choosemeLog);
+			}
+			else {
+				sfbot.sendMessage(msg.channel, msg.author + sfbotMsg.choosemeTriche);
+			}
 		}
 	},
 
@@ -229,6 +235,46 @@ var commands = {
 			chooseList = [];
 		}
 
+	},
+	"playing": {
+		// Indique le jeu auquel joue le bot.
+		name: "playing",
+		description: sfbotMsg.playingDesc,
+		extendHelp: sfbotMsg.playingExtHelp,
+		usage: "<[game]|stop>",
+		adminOnly: true,
+		process: function (sfbot, msg, suffix) {
+			if (!suffix || suffix === "stop") {
+				if (!play) {
+					sfbot.sendMessage(msg.channel, sfbotMsg.playingStopNoPlay);
+					return;
+				}
+				sfbot.setPlayingGame(null, function(error) {
+					if (error) {
+						sfbot.sendMessage(msg.channel, sfbotMsg.playingStopErr);
+						Logger.warn(error);
+					}
+					else {
+						play = false;
+						sfbot.sendMessage(msg.channel, sfbotMsg.playingStopOK);
+						Logger.info(msg.author.username + sfbotMsg.playingStopLog);
+					}
+				});
+			}
+			else {
+				sfbot.setPlayingGame(suffix, function(error) {
+					if (error) {
+						sfbot.sendMessage(msg.channel, sfbotMsg.playingGoErr);
+						Logger.warn(error);
+					}					
+					else {
+						play = true;
+						sfbot.sendMessage(msg.channel, sfbotMsg.playingGoOK.substring(0,38) + suffix + sfbotMsg.playingGoOK.substring(38));
+						Logger.info(msg.author.username + sfbotMsg.playingGoLog + suffix);
+					}
+				});
+			}
+		}
 	}
 };
 
@@ -246,6 +292,7 @@ sfbot.on("ready", function() {
 	Logger.info(sfbotMsg.readyMsg1);
 	Logger.info(sfbotMsg.readyMsg2.substring(0, 12) + servers + sfbotMsg.readyMsg2.substring(11, 20) + sfbot.channels.length + sfbotMsg.readyMsg2.substring(19, 26));
         Logger.info(sfbotMsg.readyMsg3);
+	if (sfbot.user.game.name && sfbot.user.game.name != null) play = true;
 });
 
 // Lorsque le bot est déconnecté, on le reconnecte.
