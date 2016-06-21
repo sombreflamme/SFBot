@@ -67,8 +67,19 @@
 	"choosemeExtHelp": "Permet de s'enregistrer pour être tiré au sort avec la commande `choose`.",
 	"choosemeMsg": ", tu as bien été ajouté à la liste pour le tirage au sort !",
 	"choosemeLog": " a bien été ajouté à la liste pour le tirage au sort.",
+	"choosemeTriche": " est un gros tricheur ! :rage:",
 	"chooseDesc": "Les jeux sont faits, rien ne va plus !",
 	"chooseExtHelp": "Tirage au sort des gens enregistrés avec `chooseme`.",
 	"chooseErr": "Il n'y a pas assez de personnes enregistrées pour pouvoir choisir.",
-	"chosenOne": "Et l'heureux tiré au sort est... "
+	"chosenOne": "Et l'heureux tiré au sort est... ",
+
+	"playingDesc": "Je peux jouer, dis, je peux jouer !?",
+	"playingExtHelp": "Permet d'indiquer que le bot joue au jeu renseigné.",
+	"playingStopNoPlay": "Mais je ne suis même pas en train de jouer ! Méchant ! :cry:",
+	"playingStopErr": "Ah, on dirait qu'il y a un problème, je ne peux plus m'arrêter de jouer !",
+	"playingStopOK": "D'accord, je ferme le jeu... :cry:",
+	"playingStopLog": " m'a dit d'arrêter de jouer.",
+	"playingGoErr": "Oh, il y a un problème, on dirait que je n'ai pas le droit de jouer pour l'instant... :scream:",
+	"playingGoOK": "C'est parti pour une bonne partie de `` ! :wink:",
+	"playingGoLog": " m'a dit que je pouvais jouer à "
 }
