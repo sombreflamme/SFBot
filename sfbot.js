@@ -292,7 +292,9 @@ sfbot.on("ready", function() {
 	Logger.info(sfbotMsg.readyMsg1);
 	Logger.info(sfbotMsg.readyMsg2.substring(0, 12) + servers + sfbotMsg.readyMsg2.substring(11, 20) + sfbot.channels.length + sfbotMsg.readyMsg2.substring(19, 26));
         Logger.info(sfbotMsg.readyMsg3);
-	if (sfbot.user.game.name && sfbot.user.game.name != null) play = true;
+	if (sfbot.user.game != null) {
+		if (sfbot.user.game.name != null) play = true;
+	}	
 });
 
 // Lorsque le bot est déconnecté, on le reconnecte.
